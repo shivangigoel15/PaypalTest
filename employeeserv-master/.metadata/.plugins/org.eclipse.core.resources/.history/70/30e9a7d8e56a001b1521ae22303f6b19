@@ -1,0 +1,55 @@
+package com.paypal.bfs.test.employeeserv.functionaltest.impl;
+
+import org.junit.runner.RunWith;
+import org.mockito.Spy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.paypal.bfs.test.employeeserv.api.model.Employee;
+import com.paypal.bfs.test.employeeserv.impl.EmployeeResourceImpl;
+import com.paypal.bfs.test.employeeserv.model.EmployeeEntity;
+import com.paypal.bfs.test.employeeserv.repository.EmployeeRepository;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class EmployeeResourceImplTest {
+	
+	@Autowired
+	EmployeeResourceImpl employeeResourceImpl;
+	
+	@Autowired
+	EmployeeRepository employeeRepository;
+	
+	@Before
+	public void setup() {
+		EmployeeEntity e = new EmployeeEntity();
+		e.setId(1);
+		e.setFirst_name("shivangi");
+		e.setLast_name("goel");
+		e.setDate_of_birth("2021-02-09");
+		e.setLine1("5044 sobha carnation");
+		e.setLine2("bellandur");
+		e.setCity("bangalore");
+		e.setCountry("india");
+		e.setZip_code("560103");
+		System.out.print(employeeRepository);
+		employeeRepository.save(e);
+		
+		
+	}
+	
+	
+	@Test
+	public void getEmployee_By_id_returns_employee() {
+		ResponseEntity<Employee> employee = employeeResourceImpl.employeeGetById(1);
+		Assert.assertEquals(200, employee.getStatusCodeValue());
+	}
+
+}

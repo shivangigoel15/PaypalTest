@@ -1,0 +1,6 @@
+package com.paypal.bfs.test.employeeserv.repository;
+
+public class EmployeeRepository extends CrudRepository<EmployeeEntity,Integer>{
+	
+
+}

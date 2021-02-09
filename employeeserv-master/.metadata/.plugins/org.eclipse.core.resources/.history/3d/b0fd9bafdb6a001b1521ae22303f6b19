@@ -1,0 +1,34 @@
+package com.paypal.bfs.test.employeeserv.utils;
+
+import java.util.Optional;
+
+import com.paypal.bfs.test.employeeserv.api.model.Address;
+import com.paypal.bfs.test.employeeserv.api.model.Employee;
+import com.paypal.bfs.test.employeeserv.model.EmployeeEntity;
+
+public class Utils {
+	
+	public static EmployeeEntity employeeToEntity(Employee employee) {
+		
+		EmployeeEntity e = new EmployeeEntity();
+		e.setId(employee.getId());
+		e.setFirst_name(employee.getFirstName());
+		e.setLast_name(employee.getLastName());
+		e.setDate_of_birth(employee.getDateOfBirth());
+		e.setLine1(employee.getAddress().getLine1());
+		e.setLine2(employee.getAddress().getLine2());
+		return e;
+		
+	}
+	
+	public static Employee entityToEmployee(Optional<EmployeeEntity> employee) {
+		Employee e = new Employee();
+		e.setId(employee.get().getId());
+		e.setFirstName(employee.get().getFirst_name());
+		e.setLastName(employee.get().getLast_name());
+		e.setDateOfBirth(employee.get().getDate_of_birth());
+		e.setAddress(employee.get().getAddress());
+		return e;
+	}
+	
+}

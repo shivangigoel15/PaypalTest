@@ -1,0 +1,5 @@
+package com.paypal.bfs.test.employeeserv.repository;
+
+public interface EmployeeRepository {
+
+}

@@ -1,0 +1,45 @@
+package com.paypal.bfs.test.employeeserv.impl;
+
+import com.paypal.bfs.test.employeeserv.api.EmployeeResource;
+import com.paypal.bfs.test.employeeserv.api.model.Employee;
+import com.paypal.bfs.test.employeeserv.model.EmployeeEntity;
+import com.paypal.bfs.test.employeeserv.repository.EmployeeRepository;
+import com.paypal.bfs.test.employeeserv.utils.Utils;
+
+import java.util.Date;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * Implementation class for employee resource.
+ */
+@RestController
+public class EmployeeResourceImpl implements EmployeeResource {
+	@Autowired
+	EmployeeRepository employeeRepository;
+
+    @Override
+    public ResponseEntity<Employee> employeeGetById(int id) {
+        Optional<EmployeeEntity> employee = employeeRepository.findById(id);
+        
+        if(employee.get() != null) {
+        	Employee result = Utils.entityToEmployee(employee.get());
+        	return new ResponseEntity<>(result, HttpStatus.OK);	
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+
+	@Override
+	public ResponseEntity<Employee> newEmployee(Employee newEmployee) {
+		EmployeeEntity employeeEntity = Utils.employeeToEntity(newEmployee);
+		employeeRepository.save(employeeEntity);
+		System.out.println("count" +employeeRepository.count());
+		
+		return new ResponseEntity<>(newEmployee,HttpStatus.CREATED);
+	}
+}

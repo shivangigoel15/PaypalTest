@@ -1,0 +1,43 @@
+package com.paypal.bfs.test.employeeserv.utils;
+
+import java.util.Optional;
+
+import com.paypal.bfs.test.employeeserv.api.model.Address;
+import com.paypal.bfs.test.employeeserv.api.model.Employee;
+import com.paypal.bfs.test.employeeserv.model.EmployeeEntity;
+
+public class Utils {
+	
+	public static EmployeeEntity employeeToEntity(Employee employee) {
+		
+		EmployeeEntity e = new EmployeeEntity();
+		e.setId(employee.getId());
+		e.setFirst_name(employee.getFirstName());
+		e.setLast_name(employee.getLastName());
+		e.setDate_of_birth(employee.getDateOfBirth());
+		e.setLine1(employee.getAddress().getLine1());
+		e.setLine2(employee.getAddress().getLine2());
+		e.setCity(employee.getAddress().getCity());
+		e.setCountry(employee.getAddress().getCountry());
+		e.setZip_code(employee.getAddress().getZipCode());
+		return e;
+		
+	}
+	
+	public static Employee entityToEmployee(EmployeeEntity employee) {
+		Employee e = new Employee();
+		Address address = new Address();
+		address.setLine1(employee.getLine1());
+		address.setLine2(employee.getLine2());
+		address.setCity(employee.getCity());
+		address.setCountry(employee.getCountry());
+		address.getZipCode(employee.getZip_code());
+		e.setId(employee.getId());
+		e.setFirstName(employee.getFirst_name());
+		e.setLastName(employee.getLast_name());
+		e.setDateOfBirth(employee.getDate_of_birth());
+		e.setAddress(address);
+		return e;
+	}
+	
+}

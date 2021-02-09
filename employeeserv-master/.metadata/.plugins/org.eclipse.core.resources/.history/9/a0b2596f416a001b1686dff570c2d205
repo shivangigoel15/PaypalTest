@@ -1,0 +1,51 @@
+package com.paypal.bfs.test.employeeserv.impl;
+
+import com.paypal.bfs.test.employeeserv.api.EmployeeResource;
+import com.paypal.bfs.test.employeeserv.api.model.Employee;
+import com.paypal.bfs.test.employeeserv.model.EmployeeEntity;
+import com.paypal.bfs.test.employeeserv.repository.EmployeeRepository;
+
+import java.util.Date;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * Implementation class for employee resource.
+ */
+@RestController
+public class EmployeeResourceImpl implements EmployeeResource {
+	@Autowired
+	EmployeeRepository employeeRepository;
+
+    @Override
+    public ResponseEntity<Employee> employeeGetById(int id) {
+
+//        Employee employee = new Employee();
+//        employee.setId(Integer.valueOf(id));
+//        employee.setFirstName("BFS");
+//        employee.setLastName("Developer");
+        
+        Optional<Employee> employee = employeeRepository.findById(id);
+        
+        if(employee.get() != null)
+        	return new ResponseEntity<>(employee.get(), HttpStatus.OK);
+        
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+	@Override
+	public Employee newEmployee(Employee newEmployee) {
+		EmployeeEntity e = new EmployeeEntity();
+		e.setFirst_name(newEmployee.getFirstName());
+		e.setLast_name(newEmployee.getLastName());
+		e.setDate_of_birth((Date) newEmployee.getDateOfBirth());
+		System.out.print("coiunt" + employeeRepository.count());
+		employeeRepository.save(e);
+		
+		return newEmployee;
+	}
+}
